@@ -1,0 +1,152 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação da RentalX",
+        "description": "RentX é uma api para locação de veículos.",
+        "version": "1.0.0",
+        "contact": {
+            "email": "alisson.mo.moura@outlook.com.br"
+        }
+    },
+    "paths": {
+        "/categories": {
+            "post": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Criar uma categoria.",
+                "description": "Cria uma nova categoria.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Categoria Simples",
+                                    "description": "Descrição de uma categoria simples"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Erro: Categoria já existe."
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Categorias"
+                ],
+                "sumary": "Listar categoria.",
+                "description": "Lista todas as categorias.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/categories/import": {
+            "post": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Importação de categorias",
+                "description": "Importação de categorias a partir de um arquivo CSV.",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/specifications": {
+            "post": {
+                "tags": [
+                    "Especificações"
+                ],
+                "summary": "Criar especificação",
+                "description": "Cria uma nova especificação para os veículos",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Specification"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Erro: Especificação já existe."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Specification": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
