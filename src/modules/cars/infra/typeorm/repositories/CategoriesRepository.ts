@@ -30,8 +30,8 @@ class CategoriesRepository implements ICategoriesRepository {
     }
 
     async list(): Promise<any> {
-        const teste  = await this.repository.createQueryBuilder('category').where('category.name = :name', { name: 'SUV' }).getMany()
-        return teste
+        const categories = await this.repository.find()
+        return categories
     }
 
     async findByName(name: string): Promise<Category> {

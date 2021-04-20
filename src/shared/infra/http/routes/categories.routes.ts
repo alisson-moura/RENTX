@@ -17,7 +17,7 @@ const importCategoryController = new ImportCategoryController()
 
 categoriesRoutes.post("/", ensureAuthenticated, ensureAdmin, createCategoryController.handle)
 
-categoriesRoutes.get("/", listCategoriesController.handle)
+categoriesRoutes.get("/",  ensureAuthenticated, listCategoriesController.handle)
 
 categoriesRoutes.post("/import", ensureAuthenticated, ensureAdmin,  upload.single("file"), importCategoryController.handle)
 

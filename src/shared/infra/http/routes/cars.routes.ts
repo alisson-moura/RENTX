@@ -19,7 +19,7 @@ const uploadImages = multer(upload.upload('./tmp/cars'))
 
 carsRoutes.post("/", ensureAuthenticated, ensureAdmin, createcarController.handle)
 carsRoutes.post('/specifications/:id', ensureAuthenticated, ensureAdmin, createCarSpecificationController.handle)
-carsRoutes.get("/", listAvailableCars.handle)
+carsRoutes.get("/available", listAvailableCars.handle)
 
 carsRoutes.post('/images/:id', ensureAuthenticated, ensureAdmin, uploadImages.array('images'),  uploadCarImages.handle)
 
