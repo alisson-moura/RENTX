@@ -3,8 +3,12 @@ import { Car } from '@modules/cars/infra/typeorm/entities/Car'
 import { I_CarsRepository } from '../ICarsRepository'
 
 class CarsRepositoryInMemory implements I_CarsRepository {
-
     private cars: Car[] = []
+
+    public async updateAvailable(id: string, available: boolean): Promise<void> {
+        const findIndex = await this.cars.findIndex((car) => car.id === id)
+        this.cars[findIndex].available = available
+    }
 
     async create(data: I_CreateCarDTO): Promise<Car> {
         const car = new Car()

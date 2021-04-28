@@ -3,6 +3,7 @@ import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental"
 import { I_RentalsRepository } from "@modules/rentals/repositories/IRentalsRepository"
 import { I_DateProvider } from "@shared/container/providers/DateProvider/IDateProvider"
 import { AppError } from "@shared/errors/AppError"
+import { I_CarsRepository } from "@modules/cars/repositories/ICarsRepository"
 
 
 interface I_Request {
@@ -14,17 +15,23 @@ interface I_Request {
 @injectable()
 class CreateRentalUseCase {
     private rentalsRepository: I_RentalsRepository
+    private carsRepository: I_CarsRepository
     private dateProvider: I_DateProvider
+
 
     constructor(
         @inject('RentalsRepository')
         rentalsRepository: I_RentalsRepository,
 
         @inject('DateProvider')
-        dateProvider: I_DateProvider
+        dateProvider: I_DateProvider,
+
+        @inject('CarsRepository')
+        carsRepository: I_CarsRepository
     ) {
         this.rentalsRepository = rentalsRepository
         this.dateProvider = dateProvider
+        this.carsRepository = carsRepository
     }
 
     public async execute({ user_id, car_id, expected_return_date }: I_Request): Promise<Rental> {
@@ -51,6 +58,9 @@ class CreateRentalUseCase {
             car_id,
             expected_return_date
         })
+
+        await this.carsRepository.updateAvailable(car_id, false)
+
         return rental
     }
 }

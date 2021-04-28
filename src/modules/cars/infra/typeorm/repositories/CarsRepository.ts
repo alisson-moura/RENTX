@@ -11,9 +11,17 @@ class CarsRepository implements I_CarsRepository {
         this.repository = getRepository(Car)
     }
 
+    public async updateAvailable(id: string, available: boolean): Promise<void> {
+        await this.repository
+            .createQueryBuilder()
+            .update()
+            .set({ available })
+            .where('id = :id').setParameters({ id }).execute()
+    }
+
     public async findById(car_id: string): Promise<Car> {
-       const car = await this.repository.findOne({id: car_id})
-       return car
+        const car = await this.repository.findOne({ id: car_id })
+        return car
     }
 
     public async findAvailable(): Promise<Car[]> {
