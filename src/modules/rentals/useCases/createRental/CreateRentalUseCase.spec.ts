@@ -17,6 +17,7 @@ let rentalsRepository: I_RentalsRepository
 let dateProvider: I_DateProvider
 let carsRepository: I_CarsRepository
 let valid_car: Car
+let valid_car_2: Car
 
 describe("Create Rental", () => {
     const dayAdd24Hours = dayjs().add(1, 'day').toDate()
@@ -27,6 +28,16 @@ describe("Create Rental", () => {
         createRentalUseCase = new CreateRentalUseCase(rentalsRepository, dateProvider, carsRepository)
 
         valid_car = await carsRepository.create({
+            brand: 'Fiat',
+            category_id: '123',
+            daily_rate: 100,
+            description: 'A nice Car',
+            fine_amount: 25,
+            license_plate: 'xxx-xxx',
+            name: 'Uno 2001',
+        })
+
+        valid_car_2 = await carsRepository.create({
             brand: 'Fiat',
             category_id: '123',
             daily_rate: 100,
@@ -56,13 +67,12 @@ describe("Create Rental", () => {
             expected_return_date: dayAdd24Hours
         })
 
-        expect(async () => {
-            await createRentalUseCase.execute({
-                user_id: "123",
-                car_id: valid_car.id,
-                expected_return_date: dayAdd24Hours
-            })
-        }).rejects.toBeInstanceOf(AppError)
+        await expect(createRentalUseCase.execute({
+            user_id: "123",
+            car_id: valid_car_2.id,
+            expected_return_date: dayAdd24Hours
+        })
+        ).rejects.toEqual(new AppError('Já existe um aluguel em andamento para este usuário!'))
     })
 
     it('should not be able to create a new rental if there is another open to the same car', async () => {
@@ -78,17 +88,17 @@ describe("Create Rental", () => {
                 car_id: valid_car.id,
                 expected_return_date: dayAdd24Hours
             })
-        }).rejects.toBeInstanceOf(AppError)
+        }).rejects.toEqual(new AppError('Este carro está indisponivel!'))
     })
 
-    it('should not be able to create a new rental with invalid', async () => {
+    it('should not be able to create a new rental with invalid date', async () => {
         expect(async () => {
             await createRentalUseCase.execute({
                 user_id: "123",
                 car_id: '123',
                 expected_return_date: dayjs().toDate()
             })
-        }).rejects.toBeInstanceOf(AppError)
+        }).rejects.toEqual(new AppError('Invalid return time!'))
     })
 
 

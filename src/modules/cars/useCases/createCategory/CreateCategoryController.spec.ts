@@ -1,9 +1,11 @@
+import 'reflect-metadata'
+import { app } from '@shared/infra/http/app'
 import request from 'supertest'
 import { v4 as uuid } from 'uuid'
 import { hash } from 'bcryptjs'
 import { Connection } from 'typeorm'
 
-import { app } from '@shared/infra/http/app'
+
 import createConnection from '@shared/infra/typeorm'
 
 

@@ -39,9 +39,8 @@ describe('Create Car', () => {
         const { validCar } = makeCars()
         await createCarUseCase.execute(validCar)
 
-        expect(async () => {
-            await createCarUseCase.execute(validCar)
-        }).rejects.toBeInstanceOf(AppError)
+        await expect(createCarUseCase.execute(validCar)
+        ).rejects.toEqual(new AppError('Carro já existe!'))
     })
 
     it('should be able to create a new car with available true by default', async () => {

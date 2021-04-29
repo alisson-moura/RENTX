@@ -43,24 +43,22 @@ describe("Authenticate User", () => {
         expect(result).toHaveProperty('token')
     })
 
-    it("should not be able to authenticate an noneexistent user", async () => {
+    it("should not be able to authenticate an non existent user", async () => {
         const { invalidUser } = makeCreateUser()
-        expect(async () => {
-            await authenticateUserUseCase.execute({
-                email: invalidUser.email,
-                password: invalidUser.password
-            })
-        }).rejects.toBeInstanceOf(AppError)
+        await expect(authenticateUserUseCase.execute({
+            email: invalidUser.email,
+            password: invalidUser.password
+        })
+        ).rejects.toEqual(new AppError("E-mail ou senha incorretos!"))
     })
 
     it("should not be able to authenticate an invalid password", async () => {
         const { validUser } = makeCreateUser()
         await createUserUserCase.execute(validUser)
-        expect(async () => {
-            await authenticateUserUseCase.execute({
-                email: validUser.email,
-                password: 'invalid_password'
-            })
-        }).rejects.toBeInstanceOf(AppError)
+        expect(authenticateUserUseCase.execute({
+            email: validUser.email,
+            password: 'invalid_password'
+        })
+        ).rejects.toEqual(new AppError("E-mail ou senha incorretos!"))
     })
 })

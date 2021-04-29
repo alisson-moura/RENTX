@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import request from 'supertest'
 import { v4 as uuid } from 'uuid'
 import { hash } from 'bcryptjs'
