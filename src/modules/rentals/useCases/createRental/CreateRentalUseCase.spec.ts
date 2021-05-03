@@ -43,7 +43,7 @@ describe("Create Rental", () => {
             daily_rate: 100,
             description: 'A nice Car',
             fine_amount: 25,
-            license_plate: 'xxx-xxx',
+            license_plate: 'xxx-xxxx',
             name: 'Uno 2001',
         })
 
