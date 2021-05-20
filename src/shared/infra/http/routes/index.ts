@@ -14,6 +14,6 @@ router.use("/specifications", specificationsRoutes)
 router.use("/users", usersRoutes)
 router.use("/cars", carsRoutes)
 router.use('/rentals', rentalRoutes)
-router.use('/sessions', sessionsRoutes)
+router.use('/', sessionsRoutes)
 
 export { router }

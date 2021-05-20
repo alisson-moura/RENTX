@@ -7,6 +7,10 @@ dayjs.extend(utc)
 
 class DayjsProvider implements I_DateProvider {
 
+    addDays(days: number): Date {
+        return dayjs().add(days, "day").toDate()
+    }
+
     compareInDays(end_date: Date, start_date: Date): number {
         const end_date_utc = this.convertToUTC(end_date)
         const start_date_utc = this.convertToUTC(start_date)

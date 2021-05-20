@@ -1,13 +1,17 @@
 import { Request, Response, NextFunction } from 'express'
 import { verify } from 'jsonwebtoken'
+import auth from '@config/auth'
 import { AppError } from '../../../errors/AppError'
 import { UsersRepository } from '../../../../modules/accounts/infra/typeorm/repositories/UsersRepository'
+import { UserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UserTokensRepository'
 
 interface I_Payload {
     sub: string
 }
 export async function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
     const authHeader = request.headers.authorization
+    const userTokensRepository = new UserTokensRepository()
+
     if (!authHeader) {
         throw new AppError("Faltando token.", 401)
     }
@@ -15,9 +19,9 @@ export async function ensureAuthenticated(request: Request, response: Response, 
     const [, token] = authHeader.split(" ")
 
     try {
-        const { sub: user_id } = verify(token, "3ceaff7692b58c1d2786ea973c726b5c") as I_Payload
+        const { sub: user_id } = verify(token, auth.secret_refresh_token) as I_Payload
         const usersRepository = new UsersRepository()
-        const user = await usersRepository.findById(user_id)
+        const user = await userTokensRepository.findByUserIdAndRefreshToken(user_id, token)
         if (!user) {
             throw new AppError("Usuário não existe.", 401)
         }
