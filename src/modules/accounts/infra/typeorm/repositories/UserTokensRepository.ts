@@ -10,6 +10,13 @@ class UserTokensRepository implements I_UserTokensRepository {
     constructor() {
         this.repository = getRepository(UserTokens)
     }
+    async findByRefreshToken(refresh_token: string): Promise<UserTokens> {
+        const token = await this.repository.findOne({
+            refresh_token
+        })
+        return token
+    }
+
     async findByUserIdAndRefreshToken(user_id: string, token: string): Promise<UserTokens> {
         const refresh_token = await this.repository.findOne({
             user_id,
