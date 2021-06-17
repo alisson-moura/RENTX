@@ -1,0 +1,15 @@
+import { I_MailProvider } from "../I_MailProvider";
+
+class MailProviderInMemory implements I_MailProvider {
+    private messages: any[] = []
+    async sendMail(to: string, subject: string, variables: any, path: string): Promise<void> {
+        this.messages.push({
+            to,
+            subject,
+            variables,
+            path
+        })
+    }
+}
+
+export { MailProviderInMemory }
