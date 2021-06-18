@@ -13,7 +13,7 @@
 
 ## Sobre o projeto
 
-RentX é uma API REST desenvolvida em um bootcamp de back-end chamado [Ignite] (https://pages.rocketseat.com.br/ignite). É uma plataforma de aluguel de carros que permite gerir os seus veículos, as suas características e, claro, os seus aluguéis!
+RentX é uma API REST desenvolvida em um bootcamp de back-end chamado [Ignite](https://pages.rocketseat.com.br/ignite). É uma plataforma de aluguel de carros que permite gerir os seus veículos, as suas características e, claro, os seus aluguéis!
 
 
 ## Tecnologias utilizadas
@@ -49,12 +49,13 @@ Os endpoints da API estão documentados com a interface do Swagger. Para acessar
 *http://localhost:3333/api-docs*
 
 ## Licença
-Este projeto está sob a licença do MIT. Leia o arquivo [LICENSE] (https://mit-license.org/) para mais informações.
+Este projeto está sob a licença do MIT. Leia o arquivo [LICENSE](https://mit-license.org/) para mais informações.
 
 ---
 
 <div align=center> 
 Feito com ❤️ por <a href="https://www.linkedin.com/in/alisson-moura/">Alisson Moura</a>
+<br/>
 <br/>
 <img style="border-radius: 50%;" src="https://avatars2.githubusercontent.com/u/48321754?s=460&u=9faab799c661b3f1227c25e0233a2f30b699218a&v=4" width="100px;" alt=""/>
 </div>
